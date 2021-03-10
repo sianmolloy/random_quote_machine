@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+    <title>Random Quote Machine</title>
+    <script src="quotes.js"></script>
+    <script>
+      var colors = [
+        'linear-gradient(90deg, #D9AFD9 0%, #97D9E1 100%)',
+        'linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%)',
+        'linear-gradient(90deg, #85FFBD 0%, #FFFB7D 100%)',
+        'linear-gradient(90deg, #FBDA61 0%, #FF5ACD 100%)',
+        'linear-gradient(90deg, #FFE53B 0%, #FF2525 74%)',
+        'linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%)',
+        'linear-gradient(90deg, #FAACA8 0%, #DDD6F3 100%)',
+        'linear-gradient(90deg, #FEE140 0%, #FA709A 100%)',
+        'linear-gradient(90deg, #efd5ff 0%, #515ada 100%)',
+        'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
+      ];
+      window.onload = init;
+      function init() {
+        getQuote()
+      }
+
+      function getQuote() {
+        let colorLength = colors.length;
+        let color = Math.floor(Math.random() * colorLength);
+        const backgroundStyle = {backgroundImage: colors[color]};
+        let quotesLength = quotesData.length;
+        let randomIndex = Math.floor(Math.random() * quotesLength);
+        let randomQuoteData = quotesData[randomIndex];
+
+        let tweetLink = "https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=";
+
+        // Add quote text to tweet
+        let quoteTextInApiFormat = randomQuoteData.quote.replace(/ /g, "%20");
+        tweetLink += quoteTextInApiFormat;
+
+        // Add quote author to tweet
+        let authorInApiFormat = randomQuoteData.author.replace(/ /g, "%20");
+        tweetLink += " - " + authorInApiFormat;
+
+        document.body.style.backgroundImage = colors[color];
+
+        document.getElementById("text").innerText = randomQuoteData.quote;
+        document.getElementById("author").innerText = randomQuoteData.author;
+
+        document.getElementById("tweet-quote").href = tweetLink;
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row py-5">
+        <div class="col-md-8 offset-md-2">
+          <wrapper id="quote-box">
+            <div class="card">
+              <div class="card-body text-center">
+                <blockquote class="blockquote mb-0">
+                  <p id="text"></p>
+                  <footer class="blockquote-footer">
+                    <cite title="Source Title">
+                      <span id="author"></span>
+                    </cite>
+                  </footer>
+                </blockquote>
+                <a href="#" id="tweet-quote" target="_blank" class="btn btn-secondary" style="padding: 6px 8px 5px 10px;">
+                  <i class="fa fa-twitter" style="font-size:1.4em"></i>
+                </a>
+                <button id="new-quote" onClick="getQuote();" class="btn btn-primary">Next</button>
+              </div>
+            </div>
+          </wrapper>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  </body>
+</html>
